@@ -1,0 +1,10 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Pansiere\\MarFit\\": "src/"
+    }
+  },
+  "require": {
+    "dompdf/dompdf": "^3.0"
+  }
+}

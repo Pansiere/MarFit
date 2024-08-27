@@ -1,0 +1,22 @@
+###############################################################################
+#                     Made by: João Pedro V. Pansiere                         #
+###############################################################################
+
+version: "3.1"
+services:
+  webserver:
+    image: "nginx:alpine"
+    container_name: nginx
+    working_dir: /application
+    volumes:
+      - ".:/application"
+      - "./phpdocker.io/nginx/nginx.conf:/etc/nginx/conf.d/default.conf"
+    ports:
+      - "80:80"
+  php-fpm:
+    build: phpdocker.io/php-fpm
+    container_name: php
+    working_dir: /application
+    volumes:
+      - ".:/application"
+      - "./phpdocker.io/php-fpm/php-ini-overrides.ini:/etc/php/8.3/fpm/conf.d/99-overrides.ini"
