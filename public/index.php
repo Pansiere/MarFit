@@ -1,4 +1,14 @@
-<?php include 'src/code.php'; ?>
+<?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Pansiere\MarFit\Repositories\ProductRepository;
+
+$pdo = new PDO('sqlite:' . __DIR__ . '/../data/db.sqlite');
+$ProductRepository = new ProductRepository($pdo);
+#$produtos = $ProductRepository->buscarTodos();
+
+?>
 
 <!doctype html>
 <html lang="pt-br">
@@ -14,14 +24,38 @@
             minimum-scale=1.0
         ">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="styles/index.css">
+    <link rel="stylesheet" href="css/index.css">
     <title>MarFit Store</title>
 </head>
 
 <body>
+    <header>
+        <h1>MarFit Store</h1>
+    </header>
+
+
     <main>
-        <h1>Inicio do projeto aqui</h1>
+        <div class="produto">
+            <?php if (!empty($produtos)): ?>
+                <?php foreach ($produtos as $produto): ?>
+                    <div class="produto">
+                        <p><img src="img/<?php echo htmlspecialchars($produto->getImagem()); ?>" alt="<?php echo htmlspecialchars($produto->getNome()); ?>"></p>
+                        <p><?php echo htmlspecialchars($produto->getNome()); ?></p>
+                        <p><?php echo htmlspecialchars($produto->getDescricao()); ?></p>
+                        <p><?php echo htmlspecialchars($produto->getPrecoFormatado()); ?></p>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>Sem produtos disponíveis.</p>
+            <?php endif; ?>
+        </div>
+
     </main>
+
+    <footer>
+        <h2>Rodapé</h2>
+    </footer>
+
 </body>
 
 </html>

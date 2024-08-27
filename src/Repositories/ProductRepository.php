@@ -1,11 +1,11 @@
 <?php
 
-namespace Pansiere\Alura\Repositorio;
+namespace Pansiere\MarFit\Repositories;
 
 use PDO;
-use Pansiere\Alura\Modelos\Produto;
+use Pansiere\MarFit\Models\Product;
 
-class ProdutoRepositorio
+class ProductRepository
 {
     /**
      * @param PDO $pdo
@@ -14,45 +14,16 @@ class ProdutoRepositorio
         private PDO $pdo
     ) {}
 
-    private function formarObjeto($dados): Produto
+    private function formarObjeto(array $dados): Product
     {
-        return new Produto(
+        return new Product(
             $dados['id'],
             $dados['tipo'],
             $dados['nome'],
             $dados['descricao'],
-            $dados['preco'],
-            $dados['imagem'],
+            (float) $dados['preco'],
+            $dados['imagem'] ?? null
         );
-    }
-
-    public function opcoesCafe(): array
-    {
-        $sql = "SELECT * FROM produtos WHERE tipo = 'Café' ORDER BY preco";
-        $statement = $this->pdo->query($sql);
-        $produtosCafe = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        $dadosCafe = array_map(function ($cafe) {
-            return $this->formarObjeto($cafe);
-        }, $produtosCafe);
-
-        return $dadosCafe;
-    }
-
-    public function opcoesAlmoco(): array
-    {
-        $sql = "SELECT * FROM produtos WHERE tipo = 'Almoço' ORDER BY preco";
-        $statement = $this->pdo->query($sql);
-        $produtosAlmoco = $statement->fetchAll(PDO::FETCH_ASSOC);
-
-        $dadosAlmoco = array_map(
-            function ($almoco) {
-                return $this->formarObjeto($almoco);
-            },
-            $produtosAlmoco
-        );
-
-        return $dadosAlmoco;
     }
 
     public function buscarTodos(): array
@@ -61,46 +32,42 @@ class ProdutoRepositorio
         $statement = $this->pdo->query($sql);
         $dados = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        $todosOsDados = array_map(function ($produto) {
-            return $this->formarObjeto($produto);
-        }, $dados);
-
-        return $todosOsDados;
+        return array_map([$this, 'formarObjeto'], $dados);
     }
 
     public function deletar(int $id): void
     {
         $sql = "DELETE FROM produtos WHERE id = ?";
         $statement = $this->pdo->prepare($sql);
-        $statement->binDvalue(1, $id);
+        $statement->bindValue(1, $id, PDO::PARAM_INT);
         $statement->execute();
     }
 
-    public function salvar(Produto $produto): void
+    public function salvar(Product $produto): void
     {
-        $sql = "INSERT INTO produtos (tipo, nome, descricao, preco, imagem) VALUES (?,?,?,?,?)";
-        $statment = $this->pdo->prepare($sql);
-        $statment->binDvalue(1, $produto->getTipo());
-        $statment->binDvalue(2, $produto->getNome());
-        $statment->binDvalue(3, $produto->getDescricao());
-        $statment->binDvalue(4, $produto->getPreco());
-        $statment->binDvalue(5, $produto->getImagem());
-        $statment->execute();
+        $sql = "INSERT INTO produtos (tipo, nome, descricao, preco, imagem) VALUES (?, ?, ?, ?, ?)";
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindValue(1, $produto->getTipo());
+        $statement->bindValue(2, $produto->getNome());
+        $statement->bindValue(3, $produto->getDescricao());
+        $statement->bindValue(4, $produto->getPreco());
+        $statement->bindValue(5, $produto->getImagem());
+        $statement->execute();
     }
 
-    public function buscar(int $id)
+    public function buscar(int $id): ?Product
     {
         $sql = "SELECT * FROM produtos WHERE id = ?";
         $statement = $this->pdo->prepare($sql);
-        $statement->bindValue(1, $id);
+        $statement->bindValue(1, $id, PDO::PARAM_INT);
         $statement->execute();
 
         $dados = $statement->fetch(PDO::FETCH_ASSOC);
 
-        return $this->formarObjeto($dados);
+        return $dados ? $this->formarObjeto($dados) : null;
     }
 
-    public function editar(int $id, string $tipo, string $nome, string $descricao, $preco): void
+    public function editar(int $id, string $tipo, string $nome, string $descricao, float $preco): void
     {
         $sql = "UPDATE produtos SET tipo = ?, nome = ?, descricao = ?, preco = ? WHERE id = ?";
         $statement = $this->pdo->prepare($sql);
@@ -108,11 +75,11 @@ class ProdutoRepositorio
         $statement->bindValue(2, $nome);
         $statement->bindValue(3, $descricao);
         $statement->bindValue(4, $preco);
-        $statement->bindValue(5, $id);
+        $statement->bindValue(5, $id, PDO::PARAM_INT);
         $statement->execute();
     }
 
-    public function editarComImagem(int $id, string $tipo, string $nome, string $descricao, $preco, $nomeDaImagem): void
+    public function editarComImagem(int $id, string $tipo, string $nome, string $descricao, float $preco, string $nomeDaImagem): void
     {
         $sql = "UPDATE produtos SET tipo = ?, nome = ?, descricao = ?, preco = ?, imagem = ? WHERE id = ?";
         $statement = $this->pdo->prepare($sql);
@@ -121,7 +88,25 @@ class ProdutoRepositorio
         $statement->bindValue(3, $descricao);
         $statement->bindValue(4, $preco);
         $statement->bindValue(5, $nomeDaImagem);
-        $statement->bindValue(6, $id);
+        $statement->bindValue(6, $id, PDO::PARAM_INT);
         $statement->execute();
+    }
+
+    public function opcoesCafe(): array
+    {
+        $sql = "SELECT * FROM produtos WHERE tipo = 'Café' ORDER BY preco";
+        $statement = $this->pdo->query($sql);
+        $produtosCafe = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map([$this, 'formarObjeto'], $produtosCafe);
+    }
+
+    public function opcoesAlmoco(): array
+    {
+        $sql = "SELECT * FROM produtos WHERE tipo = 'Almoço' ORDER BY preco";
+        $statement = $this->pdo->query($sql);
+        $produtosAlmoco = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+        return array_map([$this, 'formarObjeto'], $produtosAlmoco);
     }
 }

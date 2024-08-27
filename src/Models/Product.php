@@ -1,8 +1,8 @@
 <?php
 
-namespace Pansiere\Alura\Modelos;
+namespace Pansiere\MarFit\Models;
 
-class Produto
+class Product
 {
     public function __construct(
         private ?int $id,
