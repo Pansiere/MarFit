@@ -6,6 +6,7 @@ use Pansiere\MarFit\Repositories\ProductRepository;
 
 $pdo = new PDO('sqlite:' . __DIR__ . '/../data/db.sqlite');
 $ProductRepository = new ProductRepository($pdo);
+//USAR ISSO:
 #$produtos = $ProductRepository->buscarTodos();
 
 ?>
