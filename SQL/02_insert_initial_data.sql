@@ -1,4 +1,4 @@
-INSERT INTO `serenatto`.`produtos`
+INSERT INTO `marfit`.`produtos`
     (`tipo`, `nome`, `descricao`, `imagem`, `preco`)
 VALUES
     ('Café', 'Café Cremoso', 'Café cremoso irresistivelmente suave e que envolve seu paladar', 'cafe-cremoso.jpg', '5.00'),

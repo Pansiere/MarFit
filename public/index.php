@@ -2,12 +2,14 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Pansiere\MarFit\DataBase\ConnectorCreator;
 use Pansiere\MarFit\Repositories\ProductRepository;
 
-$pdo = new PDO('sqlite:' . __DIR__ . '/../data/db.sqlite');
-$ProductRepository = new ProductRepository($pdo);
-//USAR ISSO:
-#$produtos = $ProductRepository->buscarTodos();
+$connector = new ConnectorCreator(__DIR__ . './../data/db.sqlite');
+$pdo = $connector->createConnection();
+
+$productRepository = new ProductRepository($pdo);
+$produtos = $productRepository->buscarTodos();
 
 ?>
 

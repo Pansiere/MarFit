@@ -32,7 +32,11 @@ class ProductRepository
         $statement = $this->pdo->query($sql);
         $dados = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-        return array_map([$this, 'formarObjeto'], $dados);
+        $todosOsDados = array_map(function ($produto) {
+            return $this->formarObjeto($produto);
+        }, $dados);
+
+        return $todosOsDados;
     }
 
     public function deletar(int $id): void

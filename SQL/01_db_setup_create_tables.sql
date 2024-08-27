@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS `serenatto`;
+CREATE DATABASE IF NOT EXISTS `marfit`;
 
-CREATE TABLE IF NOT EXISTS `serenatto`.`produtos` (
+CREATE TABLE IF NOT EXISTS `marfit`.`produtos` (
     `id` INT NOT NULL AUTO_INCREMENT, 
     `tipo` VARCHAR(45) NOT NULL, 
     `nome` VARCHAR(45) NOT NULL, 
