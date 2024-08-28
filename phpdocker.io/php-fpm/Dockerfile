@@ -14,4 +14,4 @@ RUN apt-get update \
     RUN mkdir -p /application/public \
     && mkdir -p /application/data \
     && chown -R :www-data /application/public \
-    && chmod -R 775 /application/data
+    && chmod -R 775 /application/datae
