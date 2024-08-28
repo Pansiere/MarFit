@@ -43,9 +43,12 @@ $produtos = $productRepository->findAll();
         <div class="produtos">
             <?php foreach ($produtos as $produto): ?>
                 <div class="produto">
-                    <p><?= htmlspecialchars($produto->getName()); ?></p>
-                    <p><?= htmlspecialchars($produto->getDescription()); ?></p>
-                    <p><?= htmlspecialchars($produto->getFormattedPrice()); ?></p>
+                    <img class="image" src="images/image.jpg">
+                    <div class="data">
+                        <p><?= htmlspecialchars($produto->getName()); ?></p>
+                        <p><?= htmlspecialchars($produto->getDescription()); ?></p>
+                        <p><?= htmlspecialchars($produto->getFormattedPrice()); ?></p>
+                    </div>
                 </div>
             <?php endforeach; ?>
         </div>

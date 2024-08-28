@@ -44,7 +44,7 @@ if (isset($_POST['id'])) {
         <h2>Produtos Cadastrados</h2>
         <table>
             <thead>
-                <tr>
+                <tr claas="table_tr">
                     <th>ID</th>
                     <th>Nome</th>
                     <th>Descrição</th>
@@ -53,7 +53,7 @@ if (isset($_POST['id'])) {
                     <th>Ações</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody claas="table_body">
                 <?php if (!empty($produtos)): ?>
                     <?php foreach ($produtos as $produto): ?>
                         <tr>

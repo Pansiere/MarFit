@@ -32,7 +32,7 @@ main {
   flex-direction: column;
   border: 2px solid black;
   border-radius: 10px;
-  background-color: #ffffff;
+  background-color: #e2ae3d;
 }
 
 .produtos {
@@ -40,8 +40,11 @@ main {
   align-items: center;
   justify-content: center;
   flex-direction: row;
+  gap: 2vh;
 }
+
 .produto {
+  background-color: #ffae00;
   height: 40vh;
   width: 17vw;
   display: flex;
@@ -50,7 +53,21 @@ main {
   flex-direction: column;
   border: 2px solid black;
   border-radius: 10px;
-  padding: 15px;
+}
+
+.image {
+  height: 27vh;
+  width: 16vw;
+  border: 1px solid black;
+  border-radius: 10px;
+  object-fit: cover;
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 footer {
