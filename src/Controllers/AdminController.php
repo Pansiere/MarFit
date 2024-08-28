@@ -6,52 +6,52 @@ require_once __DIR__ . '/../config.php';
 use Pansiere\MarFit\Repositories\ProductRepository;
 use Pansiere\MarFit\Models\Product;
 
-$produtoRepositorio = new ProductRepository($pdo);
-
-#$dadosCafe = $produtoRepositorio->opcoesCafe();
-#$dadosAlmoco = $produtoRepositorio->opcoesAlmoco();
-#$produtos = $produtoRepositorio->buscarTodos();
+// Create the database connection
+$pdo = new PDO('sqlite:' . __DIR__ . '/../data/db.sqlite');
+$productRepository = new ProductRepository($pdo);
 
 if (isset($_GET['id'])) {
-    $produto = $produtoRepositorio->buscar((int)$_GET['id']);
+    $product = $productRepository->find((int)$_GET['id']);
 }
 
-if (isset($_POST['editar'])) {
+if (isset($_POST['edit'])) {
     $id = (int)$_GET['id'];
-    $tipo = htmlspecialchars($_POST['tipo'], ENT_QUOTES, 'UTF-8');
-    $nome = htmlspecialchars($_POST['nome'], ENT_QUOTES, 'UTF-8');
-    $descricao = htmlspecialchars($_POST['descricao'], ENT_QUOTES, 'UTF-8');
-    $preco = filter_input(INPUT_POST, 'preco', FILTER_VALIDATE_FLOAT);
+    $type = htmlspecialchars($_POST['type'], ENT_QUOTES, 'UTF-8');
+    $name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');
+    $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
+    $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
+    $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
 
-    if ($_FILES['imagem']['name'] != '') {
-        $nomeDaImagem = uniqid() . $_FILES['imagem']['name'];
-        $diretoriaDoImagem = 'img/' . $nomeDaImagem;
-        move_uploaded_file($_FILES['imagem']['tmp_name'], $diretoriaDoImagem);
+    if ($_FILES['image']['name'] != '') {
+        $imageName = uniqid() . $_FILES['image']['name'];
+        $imageDirectory = 'img/' . $imageName;
+        move_uploaded_file($_FILES['image']['tmp_name'], $imageDirectory);
 
-        $produtoRepositorio->editarComImagem($id, $tipo, $nome, $descricao, $preco, $nomeDaImagem);
+        $productRepository->updateWithImage($id, $type, $name, $description, $price, $imageName, $quantity);
     } else {
-        $produtoRepositorio->editar($id, $tipo, $nome, $descricao, $preco);
+        $productRepository->update($id, $type, $name, $description, $price, $quantity);
     }
 
     header("Location: admin.php");
     exit();
 }
 
-if (isset($_POST['cadastro'])) {
-    $tipo = htmlspecialchars($_POST['tipo'], ENT_QUOTES, 'UTF-8');
-    $nome = htmlspecialchars($_POST['nome'], ENT_QUOTES, 'UTF-8');
-    $descricao = htmlspecialchars($_POST['descricao'], ENT_QUOTES, 'UTF-8');
-    $preco = filter_input(INPUT_POST, 'preco', FILTER_VALIDATE_FLOAT);
+if (isset($_POST['register'])) {
+    $type = htmlspecialchars($_POST['type'], ENT_QUOTES, 'UTF-8');
+    $name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');
+    $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
+    $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
+    $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
 
-    $produto = new Product(null, $tipo, $nome, $descricao, $preco, null);
+    $product = new Product(null, $type, $name, $description, $price, null, $quantity);
 
-    if (isset($_FILES['imagem']) && $_FILES['imagem']['name'] != '') {
-        $imagem = uniqid() . $_FILES['imagem']['name'];
-        $produto->setImagem($imagem);
-        move_uploaded_file($_FILES['imagem']['tmp_name'], $produto->getImagemDiretorio());
+    if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
+        $image = uniqid() . $_FILES['image']['name'];
+        $product->setImage($image);
+        move_uploaded_file($_FILES['image']['tmp_name'], $product->getImageDirectory());
     }
 
-    $produtoRepositorio->salvar($produto);
+    $productRepository->save($product);
 
     header("Location: admin.php");
     exit();

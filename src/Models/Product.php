@@ -6,18 +6,20 @@ class Product
 {
     public function __construct(
         private ?int $id,
-        private string $tipo,
-        private string $nome,
-        private string $descricao,
-        private float $preco,
-        private ?string $imagem = null
+        private string $type,
+        private string $name,
+        private string $description,
+        private float $price,
+        private ?string $image = null,
+        private int $quantity
     ) {
         $this->id = $id;
-        $this->tipo = $tipo;
-        $this->nome = $nome;
-        $this->descricao = $descricao;
-        $this->preco = $preco;
-        $this->imagem = $imagem;
+        $this->type = $type;
+        $this->name = $name;
+        $this->description = $description;
+        $this->price = $price;
+        $this->image = $image;
+        $this->quantity = $quantity;
     }
 
     public function getId(): int
@@ -25,44 +27,43 @@ class Product
         return $this->id;
     }
 
-    public function getTipo(): string
+    public function getType(): string
     {
-        return $this->tipo;
+        return $this->type;
     }
 
-    public function getNome(): string
+    public function getName(): string
     {
-        return $this->nome;
+        return $this->name;
     }
 
-    public function getDescricao(): string
+    public function getDescription(): string
     {
-        return $this->descricao;
+        return $this->description;
     }
 
-    public function getImagem(): string
+    public function getImage(): string
     {
-        return $this->imagem;
+        return $this->image;
     }
 
-    public function setImagem(string $imagem): void
+    public function setImage(string $image): void
     {
-
-        $this->imagem = $imagem;
+        $this->image = $image;
     }
 
-    public function getImagemDiretorio(): string
+    public function getImageDirectory(): string
     {
-        return 'img/' . $this->imagem;
+        return 'img/' . $this->image;
     }
 
-    public function getPreco(): string
+    public function getPrice(): float
     {
-        return $this->preco;
+        return $this->price;
     }
 
-    public function getPrecoFormatado(): string
+    public function getFormattedPrice(): string
     {
-        return "R$ " . number_format($this->preco, 2);
+        return "R$ " . number_format($this->price, 2);
     }
 }

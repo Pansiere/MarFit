@@ -7,25 +7,33 @@ use Pansiere\MarFit\DataBase\ConnectorCreator;
 $connector = new ConnectorCreator(__DIR__ . '/../data/db.sqlite');
 $pdo = $connector->createConnection();
 
-$createTableSql = '
-    CREATE TABLE IF NOT EXISTS produtos (
+$createTablesSql = '
+    CREATE TABLE IF NOT EXISTS products (
         id INTEGER PRIMARY KEY,
         name TEXT,
-        descricao TEXT,
-        preco REAL,
-        imagem TEXT,
-        unidade_de_medida_id INTEGER,
-        FOREIGN KEY(unidade_de_medida_id) REFERENCES unidade_de_medida(id)
+        description TEXT,
+        price REAL,
+        image TEXT,
+        unit_of_measure_id INTEGER,
+        quantity INTEGER,
+        FOREIGN KEY(unit_of_measure_id) REFERENCES unit_of_measure(id)
     );
 
-    CREATE TABLE IF NOT EXISTS unidade_de_medida (
+    CREATE TABLE IF NOT EXISTS unit_of_measure (
         id INTEGER PRIMARY KEY,
         name TEXT
     );
-
-    INSERT INTO unidade_de_medida (name) VALUES ("G"), ("GG"), ("M"), ("P");    
-
-    INSERT INTO produtos (name, descricao, preco, imagem, unidade_de_medida_id) VALUES ("camisa", "camisa grandona", 10, "imagem", 1);
 ';
 
-$pdo->exec($createTableSql);
+$pdo->exec($createTablesSql);
+
+$insertDataSql = '
+    INSERT INTO unit_of_measure (name) VALUES ("G"), ("GG"), ("M"), ("P");
+
+    INSERT INTO products (name, description, price, image, unit_of_measure_id, quantity) VALUES 
+        ("Camisa", "Preta c verde", 10, "image.jpg", 1, 50),
+        ("Top", "Rosa", 50, "image.jpg", 2, 10);
+
+';
+
+$pdo->exec($insertDataSql);
