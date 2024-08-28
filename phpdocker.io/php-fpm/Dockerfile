@@ -10,3 +10,13 @@ RUN apt-get update \
     && docker-php-ext-install pdo pdo_mysql \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+
+RUN mkdir -pv /application/data \
+    && -pv mkdir /application/public/images \
+    && chown -R www-data:www-data /application/data /application/public/images
+
+COPY inicialScript.php /application/src/inicialScript.php
+
+USER www-data
+
+ENTRYPOINT ["php", "/application/src/inicialScript.php"]
