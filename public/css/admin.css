@@ -16,7 +16,11 @@ body {
 }
 
 header {
-  margin: 3vh;
+  width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
 }
 
 main {

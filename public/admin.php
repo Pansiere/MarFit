@@ -2,6 +2,14 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use Pansiere\MarFit\DataBase\ConnectorCreator;
+use Pansiere\MarFit\Repositories\ProductRepository;
+
+$connector = new ConnectorCreator(__DIR__ . './../data/db.sqlite');
+$pdo = $connector->createConnection();
+
+$productRepository = new ProductRepository($pdo);
+$produtos = $productRepository->findAll();
 
 ?>
 
@@ -18,30 +26,15 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 <body>
     <header>
-        <h1>Painel de Administração</h1>
+        <a href="index.php">Home</a>
+        <div>
+            <h1>Victoria Lavagnoli</h1>
+            <h2>Painel de Administração</h2>
+        </div>
+        <a href="admin.php">Administração</a>
     </header>
 
     <main>
-        <h2>Cadastrar Produto</h2>
-        <form action="admin.php" method="post" enctype="multipart/form-data">
-            <label for="tipo">Tipo:</label>
-            <input type="text" name="tipo" id="tipo" required>
-            <br>
-            <label for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" required>
-            <br>
-            <label for="descricao">Descrição:</label>
-            <textarea name="descricao" id="descricao" required></textarea>
-            <br>
-            <label for="preco">Preço:</label>
-            <input type="text" name="preco" id="preco" required>
-            <br>
-            <label for="imagem">Imagem:</label>
-            <input type="file" name="imagem" id="imagem">
-            <br>
-            <button type="submit" name="cadastro">Cadastrar Produto</button>
-        </form>
-
         <h2>Produtos Cadastrados</h2>
         <table>
             <thead>
@@ -50,7 +43,6 @@ require_once __DIR__ . '/../vendor/autoload.php';
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Preço</th>
-                    <th>Imagem</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -59,12 +51,12 @@ require_once __DIR__ . '/../vendor/autoload.php';
                     <?php foreach ($produtos as $produto): ?>
                         <tr>
                             <td><?php echo htmlspecialchars($produto->getId()); ?></td>
-                            <td><?php echo htmlspecialchars($produto->getNome()); ?></td>
-                            <td><?php echo htmlspecialchars($produto->getDescricao()); ?></td>
-                            <td><?php echo htmlspecialchars($produto->getPrecoFormatado()); ?></td>
-                            <td><img src="../img/<?php echo htmlspecialchars($produto->getImagem()); ?>" alt="<?php echo htmlspecialchars($produto->getNome()); ?>" style="max-width: 100px;"></td>
+                            <td><?php echo htmlspecialchars($produto->getName()); ?></td>
+                            <td><?php echo htmlspecialchars($produto->getDescription()); ?></td>
+                            <td><?php echo htmlspecialchars($produto->getFormattedPrice()); ?></td>
                             <td>
-                                <a href="admin.php?id=<?php echo htmlspecialchars($produto->getId()); ?>&action=delete">Excluir</a>
+                                <a href="edit.php?id=<?php echo htmlspecialchars($produto->getId()); ?>&action=editar">Editar</a>
+                                <a href="actions.php?id=<?php echo htmlspecialchars($produto->getId()); ?>&action=delete">Excluir</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -75,6 +67,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
                 <?php endif; ?>
             </tbody>
         </table>
+
+        <a href="register.php">Adicionar produto</a>
+
     </main>
 
     <footer>

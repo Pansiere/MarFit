@@ -11,6 +11,7 @@ $createTablesSql = '
     CREATE TABLE IF NOT EXISTS products (
         id INTEGER PRIMARY KEY,
         name TEXT,
+        type TEXT,
         description TEXT,
         price REAL,
         image TEXT,
@@ -30,9 +31,9 @@ $pdo->exec($createTablesSql);
 $insertDataSql = '
     INSERT INTO unit_of_measure (name) VALUES ("G"), ("GG"), ("M"), ("P");
 
-    INSERT INTO products (name, description, price, image, unit_of_measure_id, quantity) VALUES 
-        ("Camisa", "Preta c verde", 10, "image.jpg", 1, 50),
-        ("Top", "Rosa", 50, "image.jpg", 2, 10);
+    INSERT INTO products (name, type, description, price, image, unit_of_measure_id, quantity) VALUES 
+        ("Camisa", "regata","Preta c verde", 10, "image.jpg", 1, 50),
+        ("Top", "parte de cima", "Rosa", 50, "image.jpg", 2, 10);
 
 ';
 

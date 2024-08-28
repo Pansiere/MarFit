@@ -9,7 +9,7 @@ $connector = new ConnectorCreator(__DIR__ . './../data/db.sqlite');
 $pdo = $connector->createConnection();
 
 $productRepository = new ProductRepository($pdo);
-#$produtos = $productRepository->buscarTodos();
+$produtos = $productRepository->findAll();
 
 ?>
 
@@ -33,24 +33,21 @@ $productRepository = new ProductRepository($pdo);
 
 <body>
     <header>
+        <a href="index.php">Home</a>
         <h1>MarFit Store</h1>
+        <a href="admin.php">Administração</a>
     </header>
 
 
     <main>
-        <div class="produto">
-            <?php if (!empty($produtos)): ?>
-                <?php foreach ($produtos as $produto): ?>
-                    <div class="produto">
-                        <p><img src="img/<?php echo htmlspecialchars($produto->getImagem()); ?>" alt="<?php echo htmlspecialchars($produto->getNome()); ?>"></p>
-                        <p><?php echo htmlspecialchars($produto->getNome()); ?></p>
-                        <p><?php echo htmlspecialchars($produto->getDescricao()); ?></p>
-                        <p><?php echo htmlspecialchars($produto->getPrecoFormatado()); ?></p>
-                    </div>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <p>Sem produtos disponíveis.</p>
-            <?php endif; ?>
+        <div class="produtos">
+            <?php foreach ($produtos as $produto): ?>
+                <div class="produto">
+                    <p><?= htmlspecialchars($produto->getName()); ?></p>
+                    <p><?= htmlspecialchars($produto->getDescription()); ?></p>
+                    <p><?= htmlspecialchars($produto->getFormattedPrice()); ?></p>
+                </div>
+            <?php endforeach; ?>
         </div>
 
     </main>

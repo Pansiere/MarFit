@@ -22,8 +22,8 @@ class ProductRepository
             $data['name'],
             $data['description'],
             (float) $data['price'],
-            $data['image'] ?? null,
-            $data['quantity']
+            (int) $data['quantity'],
+            $data['image'] ?? null
         );
     }
 
@@ -46,13 +46,14 @@ class ProductRepository
 
     public function save(Product $product): void
     {
-        $sql = "INSERT INTO products (type, name, description, price, image) VALUES (?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO products (type, name, description, price, quantity, image) VALUES (?, ?, ?, ?, ?, ?)";
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(1, $product->getType());
         $statement->bindValue(2, $product->getName());
         $statement->bindValue(3, $product->getDescription());
         $statement->bindValue(4, $product->getPrice());
-        $statement->bindValue(5, $product->getImage());
+        $statement->bindValue(5, $product->getQuantity());
+        $statement->bindValue(6, $product->getImage());
         $statement->execute();
     }
 

@@ -10,16 +10,16 @@ class Product
         private string $name,
         private string $description,
         private float $price,
-        private ?string $image = null,
-        private int $quantity
+        private int $quantity,
+        private ?string $image = null
     ) {
         $this->id = $id;
         $this->type = $type;
         $this->name = $name;
         $this->description = $description;
         $this->price = $price;
-        $this->image = $image;
         $this->quantity = $quantity;
+        $this->image = $image;
     }
 
     public function getId(): int
@@ -62,6 +62,10 @@ class Product
         return $this->price;
     }
 
+    public function getQuantity(): int
+    {
+        return $this->quantity;
+    }
     public function getFormattedPrice(): string
     {
         return "R$ " . number_format($this->price, 2);
