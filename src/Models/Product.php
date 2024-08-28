@@ -44,7 +44,7 @@ class Product
 
     public function getImage(): string
     {
-        return $this->image;
+        return $this->image ?? '';
     }
 
     public function setImage(string $image): void

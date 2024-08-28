@@ -11,6 +11,13 @@ $pdo = $connector->createConnection();
 $productRepository = new ProductRepository($pdo);
 $produtos = $productRepository->findAll();
 
+if (isset($_POST['id'])) {
+    $produtos = $productRepository->delete($_POST['id']);
+
+    header("Location: admin.php");
+    exit();
+}
+
 ?>
 
 <!doctype html>
@@ -43,6 +50,7 @@ $produtos = $productRepository->findAll();
                     <th>Nome</th>
                     <th>Descrição</th>
                     <th>Preço</th>
+                    <th>Quantidade</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -54,9 +62,19 @@ $produtos = $productRepository->findAll();
                             <td><?php echo htmlspecialchars($produto->getName()); ?></td>
                             <td><?php echo htmlspecialchars($produto->getDescription()); ?></td>
                             <td><?php echo htmlspecialchars($produto->getFormattedPrice()); ?></td>
+                            <td><?php echo htmlspecialchars($produto->getQuantity()); ?></td>
                             <td>
-                                <a href="edit.php?id=<?php echo htmlspecialchars($produto->getId()); ?>&action=editar">Editar</a>
-                                <a href="actions.php?id=<?php echo htmlspecialchars($produto->getId()); ?>&action=delete">Excluir</a>
+                                <form action="edit.php" method="post" style="display: inline;">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($produto->getId()); ?>">
+                                    <input type="hidden" name="action" value="editar">
+                                    <button type="submit">Editar</button>
+                                </form>
+
+                                <form action="#" method="post" style="display: inline;">
+                                    <input type="hidden" name="id" value="<?php echo htmlspecialchars($produto->getId()); ?>">
+                                    <input type="hidden" name="action" value="editar">
+                                    <button type="submit">Exluir</button>
+                                </form>
                             </td>
                         </tr>
                     <?php endforeach; ?>
