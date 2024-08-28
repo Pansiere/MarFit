@@ -25,7 +25,7 @@ $createTableSql = '
 
     INSERT INTO unidade_de_medida (name) VALUES ("G"), ("GG"), ("M"), ("P");    
 
-    INSERT INTO produtos (name, descricao, preco, imagem, unidade_de_medida_id) VALUES ("camisa", "camisa grandona", 10, "imagem", 1);    
+    INSERT INTO produtos (name, descricao, preco, imagem, unidade_de_medida_id) VALUES ("camisa", "camisa grandona", 10, "imagem", 1);
 ';
 
 $pdo->exec($createTableSql);

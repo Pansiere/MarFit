@@ -1,0 +1,48 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  font-family: "Roboto Condensed", sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #f3a806;
+}
+
+header {
+  margin: 3vh;
+}
+
+main {
+  height: 80vh;
+  width: 90vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid black;
+  border-radius: 10px;
+  background-color: #ffffff;
+}
+
+.produto {
+  height: 40vh;
+  width: 17vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+footer {
+  margin: 3vh;
+}
