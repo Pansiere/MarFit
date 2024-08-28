@@ -69,28 +69,30 @@ class ProductRepository
         return $data ? $this->createProductObject($data) : null;
     }
 
-    public function update(int $id, string $type, string $name, string $description, float $price): void
+    public function update(int $id, string $type, string $name, string $description, int $quantity, float $price): void
     {
-        $sql = "UPDATE products SET type = ?, name = ?, description = ?, price = ? WHERE id = ?";
+        $sql = "UPDATE products SET type = ?, name = ?, description = ?, price = ?, quantity = ? WHERE id = ?";
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(1, $type);
         $statement->bindValue(2, $name);
         $statement->bindValue(3, $description);
         $statement->bindValue(4, $price);
-        $statement->bindValue(5, $id, PDO::PARAM_INT);
+        $statement->bindValue(5, $quantity, PDO::PARAM_INT);
+        $statement->bindValue(6, $id, PDO::PARAM_INT);
         $statement->execute();
     }
 
-    public function updateWithImage(int $id, string $type, string $name, string $description, float $price, string $imageName): void
+    public function updateWithImage(int $id, string $type, string $name, string $description, int $quantity, float $price, string $imageName): void
     {
-        $sql = "UPDATE products SET type = ?, name = ?, description = ?, price = ?, image = ? WHERE id = ?";
+        $sql = "UPDATE products SET type = ?, name = ?, description = ?, price = ?, quantity = ?, image = ? WHERE id = ?";
         $statement = $this->pdo->prepare($sql);
         $statement->bindValue(1, $type);
         $statement->bindValue(2, $name);
         $statement->bindValue(3, $description);
         $statement->bindValue(4, $price);
-        $statement->bindValue(5, $imageName);
-        $statement->bindValue(6, $id, PDO::PARAM_INT);
+        $statement->bindValue(5, $quantity);
+        $statement->bindValue(6, $imageName);
+        $statement->bindValue(7, $id, PDO::PARAM_INT);
         $statement->execute();
     }
 

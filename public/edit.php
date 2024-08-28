@@ -4,34 +4,33 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Pansiere\MarFit\DataBase\ConnectorCreator;
 use Pansiere\MarFit\Repositories\ProductRepository;
-use Pansiere\MarFit\Models\Product;
 
 $connector = new ConnectorCreator(__DIR__ . './../data/db.sqlite');
 $pdo = $connector->createConnection();
 
 $productRepository = new ProductRepository($pdo);
-$produtos = $productRepository->findAll();
 
-$titulo = isset($_POST['editar']) ? "Editar produto" : "Cadastrar Produto";
-$modo = isset($_POST['register']) ? "registrar" : "edit";
-
-
-if (isset($_POST['register'])) {
+if (isset($_POST['id'])) {
+    $produto = $productRepository->find($_POST['id']);
+    $id = $_POST['id'];
+}
+if (isset($_POST['edit'])) {
+    $id = (int)$_POST['id'];
     $type = htmlspecialchars($_POST['type'], ENT_QUOTES, 'UTF-8');
     $name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');
     $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
     $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
     $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
 
-    $product = new Product(null, $type, $name, $description, $price, $quantity, null);
+    if ($_FILES['image']['name'] != '') {
+        $imageName = uniqid() . $_FILES['image']['name'];
+        $imageDirectory = 'img/' . $imageName;
+        move_uploaded_file($_FILES['image']['tmp_name'], $imageDirectory);
 
-    if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
-        $image = uniqid() . $_FILES['image']['name'];
-        $product->setImage($image);
-        move_uploaded_file($_FILES['image']['tmp_name'], $product->getImageDirectory());
+        $productRepository->updateWithImage($id, $type, $name, $description, $price, $quantity, $imageName);
+    } else {
+        $productRepository->update($id, $type, $name, $description, $price, $quantity);
     }
-
-    $productRepository->save($product);
 
     header("Location: admin.php");
     exit();
@@ -61,27 +60,28 @@ if (isset($_POST['register'])) {
     </header>
 
     <main>
-        <h2><?= $titulo ?></h2>
-        <form action="adminController.php" method="post" enctype="multipart/form-data">
-            <label for="tipo">Tipo:</label>
-            <input type="text" name="tipo" id="tipo" required>
+        <h2>Editando o produto #000<?= $_POST['id'] ?></h2>
+        <form action="#" method="post" enctype="multipart/form-data">
+            <label for="type">Tipo:</label>
+            <input type="text" name="type" id="type" value="<?= $produto->getType(); ?>" required>
             <br>
-            <label for="nome">Nome:</label>
-            <input type="text" name="nome" id="nome" required>
+            <label for="name">Nome:</label>
+            <input type="text" name="name" id="name" value="<?= $produto->getName(); ?>" required>
             <br>
-            <label for="descricao">Descrição:</label>
-            <textarea name="descricao" id="descricao" required></textarea>
+            <label for="price">Preço:</label>
+            <input type="text" name="price" id="price" value="<?= $produto->getFormattedPrice(); ?>" required>
             <br>
-            <label for="preco">Preço:</label>
-            <input type="text" name="preco" id="preco" required>
+            <label for="quantity">Quantidade:</label>
+            <input type="text" name="quantity" id="quantity" value="<?= $produto->getQuantity(); ?>" required>
             <br>
-            <label for="quantidade">Quantidade:</label>
-            <input type="text" name="preco" id="quantidade" required>
+            <label for="description">Descrição:</label>
+            <textarea name="description" id="description" required></textarea>
             <br>
-            <label for="imagem">Imagem:</label>
-            <input type="file" name="imagem" id="imagem">
+            <label for="image">Imagem:</label>
+            <input type="file" name="image" id="image">
             <br>
-            <button type="submit" name="register">Cadastrar Produto</button>
+            <input type="hidden" name="id" id="id" value="<?= $id ?>">
+            <button type="submit" name="edit">Editar Produto</button>
         </form>
 
     </main>
