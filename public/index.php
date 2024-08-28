@@ -9,7 +9,7 @@ $connector = new ConnectorCreator(__DIR__ . './../data/db.sqlite');
 $pdo = $connector->createConnection();
 
 $productRepository = new ProductRepository($pdo);
-$produtos = $productRepository->buscarTodos();
+#$produtos = $productRepository->buscarTodos();
 
 ?>
 
