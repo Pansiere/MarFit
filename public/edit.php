@@ -19,8 +19,8 @@ if (isset($_POST['edit'])) {
     $type = htmlspecialchars($_POST['type'], ENT_QUOTES, 'UTF-8');
     $name = htmlspecialchars($_POST['name'], ENT_QUOTES, 'UTF-8');
     $description = htmlspecialchars($_POST['description'], ENT_QUOTES, 'UTF-8');
-    $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
-    $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
+    $price = (float) $_price;
+    $quantity = (int)$_POST['quantity'];
 
     if ($_FILES['image']['name'] != '') {
         $imageName = uniqid() . $_FILES['image']['name'];

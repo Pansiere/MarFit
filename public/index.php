@@ -11,6 +11,10 @@ $pdo = $connector->createConnection();
 $productRepository = new ProductRepository($pdo);
 $produtos = $productRepository->findAll();
 
+$uri = strtok($_SERVER['REQUEST_URI'], '?');
+$page = rtrim($uri, '/') ?: '/';
+
+var_dump($page);
 ?>
 
 <!doctype html>
