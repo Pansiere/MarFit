@@ -11,7 +11,8 @@ RUN apt-get update \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
-    RUN mkdir -p /application/public \
-    && mkdir -p /application/data \
-    && chown -R :www-data /application/public \
-    && chmod -R 775 /application/datae
+    #RUN mkdir -p /application/public \
+    #&& mkdir -p /application/data \
+    #&& chown -R :www-data /application/public \
+    #&& chmod -R 775 /application/datae
+    
