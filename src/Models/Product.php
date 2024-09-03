@@ -12,15 +12,7 @@ class Product
         private float $price,
         private int $quantity,
         private ?string $image = null
-    ) {
-        $this->id = $id;
-        $this->type = $type;
-        $this->name = $name;
-        $this->description = $description;
-        $this->price = $price;
-        $this->quantity = $quantity;
-        $this->image = $image;
-    }
+    ) {}
 
     public function getId(): int
     {

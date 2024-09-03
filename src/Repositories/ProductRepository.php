@@ -2,8 +2,8 @@
 
 namespace Pansiere\MarFit\Repositories;
 
-use PDO;
 use Pansiere\MarFit\Models\Product;
+use PDO;
 
 class ProductRepository
 {
