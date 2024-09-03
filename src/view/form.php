@@ -42,7 +42,6 @@
             <br>
             <button type="submit" name="register">Cadastrar Produto</button>
         </form>
-
     </main>
 
     <footer>

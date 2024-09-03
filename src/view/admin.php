@@ -46,7 +46,6 @@
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($produto->getId()); ?>">
                                     <button type="submit">Editar</button>
                                 </form>
-
                                 <form action="" method="post" style="display: inline;">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($produto->getId()); ?>">
                                     <button type="submit">Excluir</button>
@@ -61,9 +60,7 @@
                 <?php endif; ?>
             </tbody>
         </table>
-
         <a href="register.php">Adicionar produto</a>
-
     </main>
 
     <footer>
