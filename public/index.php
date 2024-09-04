@@ -15,8 +15,8 @@ $pdo = $connector->createConnection();
 
 $controller = new Controller($pdo);
 
-$productRepository = new ProductRepository($pdo);
-$produtos = $productRepository->findAll();
+// $productRepository = new ProductRepository($pdo);
+// $produtos = $productRepository->findAll();
 
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $page = rtrim($uri, '/') ?: '/';
@@ -47,5 +47,5 @@ switch ($page) {
         break;
 
     default:
-        $controller->home($produtos);
+        $controller->home();
 }
