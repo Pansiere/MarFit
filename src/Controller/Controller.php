@@ -19,12 +19,16 @@ class Controller
     {
         $produto_id = null;
         $produtos = $this;
-        require __DIR__ . "/../public/formulario.php";
+        require __DIR__ . "/../view/form.php";
     }
 
     public function formEdit($product_id) {}
 
-    public function save() {}
+    public function save()
+    {
+        header("Location: /admin");
+        exit();
+    }
 
     public function delete($product_id)
     {

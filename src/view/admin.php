@@ -60,7 +60,7 @@
                 <?php endif; ?>
             </tbody>
         </table>
-        <a href="register.php">Adicionar produto</a>
+        <a href="/form">Adicionar produto</a>
     </main>
 
     <footer>

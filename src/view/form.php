@@ -11,17 +11,17 @@
 
 <body>
     <header>
-        <a href="index.php">Home</a>
+        <a href="/home">Home</a>
         <div>
             <h1>Victoria Lavagnoli</h1>
             <h2>Painel de Administração</h2>
         </div>
-        <a href="admin.php">Administração</a>
+        <a href="/admin">Administração</a>
     </header>
 
     <main>
         <h2>Cadastro de produto</h2>
-        <form action="#" method="post" enctype="multipart/form-data">
+        <form action="/save" method="post" enctype="multipart/form-data">
             <label for="type">Tipo:</label>
             <input type="text" name="type" id="type" required>
             <br>
