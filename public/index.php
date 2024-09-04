@@ -4,17 +4,15 @@ session_start();
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Pansiere\MarFit\DataBase\ConnectorCreator;
 use Pansiere\MarFit\Controller\Controller;
+use Pansiere\MarFit\Config\Config;
 
-//arquivo de config aqui em breve..
-$connector = new ConnectorCreator(__DIR__ . '/../data/db.sqlite');
-$pdo = $connector->createConnection();
-
-$controller = new Controller($pdo);
+$connenction = Config::createConnection();
 
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $page = rtrim($uri, '/') ?: '/';
+
+$controller = new Controller($pdo);
 
 switch ($page) {
     case "/form":
