@@ -37,16 +37,6 @@ if (isset($_POST['register'])) {
 
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
-
-use Pansiere\MarFit\DataBase\ConnectorCreator;
-use Pansiere\MarFit\Repositories\ProductRepository;
-
-$connector = new ConnectorCreator(__DIR__ . './../data/db.sqlite');
-$pdo = $connector->createConnection();
-
-$productRepository = new ProductRepository($pdo);
-
 if (isset($_POST['id'])) {
     $produto = $productRepository->find($_POST['id']);
     $id = $_POST['id'];
@@ -76,17 +66,6 @@ if (isset($_POST['edit'])) {
 ?>
 
 <?php
-
-require_once __DIR__ . '/../vendor/autoload.php';
-
-use Pansiere\MarFit\DataBase\ConnectorCreator;
-use Pansiere\MarFit\Repositories\ProductRepository;
-
-$connector = new ConnectorCreator(__DIR__ . './../data/db.sqlite');
-$pdo = $connector->createConnection();
-
-$productRepository = new ProductRepository($pdo);
-$produtos = $productRepository->findAll();
 
 if (isset($_POST['id'])) {
     $productRepository->delete($_POST['id']);

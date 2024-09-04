@@ -29,7 +29,7 @@ class ProductRepository
 
     public function findAll(): array
     {
-        $sql = "SELECT * FROM products ORDER BY price";
+        $sql = "SELECT * FROM products";
         $statement = $this->pdo->query($sql);
         $data = $statement->fetchAll(PDO::FETCH_ASSOC);
 

@@ -2,36 +2,50 @@
 
 session_start();
 
-require_once '../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
-use Pansiere\MarFit\Produtos;
+use Pansiere\MarFit\DataBase\ConnectorCreator;
+use Pansiere\MarFit\Repositories\ProductRepository;
+use Pansiere\MarFit\Controller\Controller;
+
+
+//arquivo de config aqui em breve..
+$connector = new ConnectorCreator(__DIR__ . '/../data/db.sqlite');
+$pdo = $connector->createConnection();
+
+$controller = new Controller();
+
+$productRepository = new ProductRepository($pdo);
+$produtos = $productRepository->findAll();
 
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $page = rtrim($uri, '/') ?: '/';
 
-// $produtos = new Produtos();
+switch ($page) {
+    case "/form":
+        $controller->form();
+        break;
 
-// switch ($page) {
-//     case "/criar":
-//         $produtos->criar();
-//         break;
+    case "/formEdit":
+        $controller->formEdit($_POST['produto_id']);
+        break;
 
-//     case "/editar":
-//         $produtos->editar($_POST['produto_id']);
-//         break;
+    case "/save":
+        $controller->save();
+        break;
 
-//     case "/salvar":
-//         $produtos->salvar();
-//         break;
+    case "/delete":
+        $controller->delete($_POST['produto_id']);
+        break;
 
-//     case "/deletar":
-//         $produtos->deletar($_POST['produto_id']);
-//         break;
+    case "/update":
+        $controller->update($_POST['produto_id']);
+        break;
 
-//     case "/atualizar":
-//         $produtos->atualizar($_POST['produto_id']);
-//         break;
+    case "/admin":
+        $controller->admin($produtos);
+        break;
 
-//     default:
-//         $produtos->listar();
-// }
+    default:
+        $controller->home($produtos);
+}

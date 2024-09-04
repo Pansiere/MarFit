@@ -11,12 +11,12 @@
 
 <body>
     <header>
-        <a href="index.php">Home</a>
+        <a href="/home">Home</a>
         <div>
             <h1>Victoria Lavagnoli</h1>
             <h2>Painel de Administração</h2>
         </div>
-        <a href="admin.php">Administração</a>
+        <a href="/admin">Administração</a>
     </header>
 
     <main>
@@ -36,18 +36,18 @@
                 <?php if (!empty($produtos)): ?>
                     <?php foreach ($produtos as $produto): ?>
                         <tr>
-                            <td><?= htmlspecialchars($produto->getId()); ?></td>
-                            <td><?= htmlspecialchars($produto->getName()); ?></td>
-                            <td><?= htmlspecialchars($produto->getDescription()); ?></td>
-                            <td><?= htmlspecialchars($produto->getFormattedPrice()); ?></td>
-                            <td><?= htmlspecialchars($produto->getQuantity()); ?></td>
+                            <td><?= $produto->getId(); ?></td>
+                            <td><?= $produto->getName(); ?></td>
+                            <td><?= $produto->getDescription(); ?></td>
+                            <td><?= $produto->getFormattedPrice(); ?></td>
+                            <td><?= $produto->getQuantity(); ?></td>
                             <td>
                                 <form action="edit.php" method="post" style="display: inline;">
-                                    <input type="hidden" name="id" value="<?= htmlspecialchars($produto->getId()); ?>">
+                                    <input type="hidden" name="id" value="<?= $produto->getId(); ?>">
                                     <button type="submit">Editar</button>
                                 </form>
-                                <form action="" method="post" style="display: inline;">
-                                    <input type="hidden" name="id" value="<?= htmlspecialchars($produto->getId()); ?>">
+                                <form action="/delete" method="post" style="display: inline;">
+                                    <input type="hidden" name="product_id" value="<?= $produto->getId(); ?>">
                                     <button type="submit">Excluir</button>
                                 </form>
                             </td>

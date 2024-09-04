@@ -46,7 +46,7 @@ class Product
 
     public function getImageDirectory(): string
     {
-        return 'img/' . $this->image;
+        return "img/$this->image";
     }
 
     public function getPrice(): float

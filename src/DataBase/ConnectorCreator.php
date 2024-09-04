@@ -13,7 +13,7 @@ class ConnectorCreator
 
     public function __construct(string $dbFile, string $user = '', string $password = '')
     {
-        $this->dsn = "sqlite:" . $dbFile;
+        $this->dsn = "sqlite:$dbFile";
         $this->user = $user;
         $this->password = $password;
     }
