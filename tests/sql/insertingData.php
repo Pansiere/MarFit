@@ -1,10 +1,10 @@
 <?php
 
-require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use Pansiere\MarFit\DataBase\ConnectorCreator;
 
-$connector = new ConnectorCreator(__DIR__ . '/../data/db.sqlite');
+$connector = new ConnectorCreator(__DIR__ . '/../../data/db.sqlite');
 $pdo = $connector->createConnection();
 
 $insertDataSql = '
@@ -16,4 +16,6 @@ $insertDataSql = '
 
 ';
 
-$pdo->exec($insertDataSql);
+for ($i = 0; $i < 6; $i++) {
+    $pdo->exec($insertDataSql);
+};
