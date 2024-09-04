@@ -5,18 +5,13 @@ session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Pansiere\MarFit\DataBase\ConnectorCreator;
-use Pansiere\MarFit\Repositories\ProductRepository;
 use Pansiere\MarFit\Controller\Controller;
-
 
 //arquivo de config aqui em breve..
 $connector = new ConnectorCreator(__DIR__ . '/../data/db.sqlite');
 $pdo = $connector->createConnection();
 
 $controller = new Controller($pdo);
-
-// $productRepository = new ProductRepository($pdo);
-// $produtos = $productRepository->findAll();
 
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $page = rtrim($uri, '/') ?: '/';
@@ -43,7 +38,7 @@ switch ($page) {
         break;
 
     case "/admin":
-        $controller->admin($produtos);
+        $controller->admin();
         break;
 
     default:
