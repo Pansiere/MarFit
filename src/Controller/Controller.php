@@ -17,12 +17,16 @@ class Controller
 
     public function form()
     {
-        $produto_id = null;
-        $produtos = $this;
+        $product = null;
         require __DIR__ . "/../view/form.php";
     }
 
-    public function formEdit($product_id) {}
+    public function formEdit($product_id)
+    {
+        $product = $this->productRepository->find($product_id);
+        var_dump($product);
+        require __DIR__ . "/../view/form.php";
+    }
 
     public function save()
     {
@@ -38,7 +42,13 @@ class Controller
         exit();
     }
 
-    public function update($product_id) {}
+    public function update($product_id)
+    {
+        # $this->productRepository->update($product_id);
+
+        header("Location: /admin");
+        exit();
+    }
 
     public function admin()
     {

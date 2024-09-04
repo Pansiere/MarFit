@@ -42,8 +42,8 @@
                             <td><?= $produto->getFormattedPrice(); ?></td>
                             <td><?= $produto->getQuantity(); ?></td>
                             <td>
-                                <form action="edit.php" method="post" style="display: inline;">
-                                    <input type="hidden" name="id" value="<?= $produto->getId(); ?>">
+                                <form action="/formEdit" method="post" style="display: inline;">
+                                    <input type="hidden" name="product_id" value="<?= $produto->getId(); ?>">
                                     <button type="submit">Editar</button>
                                 </form>
                                 <form action="/delete" method="post" style="display: inline;">
