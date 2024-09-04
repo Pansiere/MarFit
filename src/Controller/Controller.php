@@ -34,13 +34,15 @@ class Controller
 
     public function update($product_id) {}
 
-    public function admin(array $produtos)
+    public function admin()
     {
+        $produtos = $this->productRepository->findAll();
         require __DIR__ . "/../view/admin.php";
     }
 
-    public function home(array $produtos)
+    public function home()
     {
+        $produtos = $this->productRepository->findAll();
         require __DIR__ . "/../view/home.php";
     }
 }
