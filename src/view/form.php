@@ -20,27 +20,28 @@
     </header>
 
     <main>
-        <h2>Cadastro de produto</h2>
-        <form action="/save" method="post" enctype="multipart/form-data">
+        <h2><?= $product ? "Editando item: " . $product->getName() . "<br>ID: " . $product->getId() : 'Cadastro de produto' ?></h2>
+        <form action="<?= $product ? '/update' : '/save' ?>" method="post" enctype="multipart/form-data">
             <label for="type">Tipo:</label>
-            <input type="text" name="type" id="type" required>
+            <input type="text" name="type" id="type" value="<?= $product ? $product->getType() : '' ?>" required>
             <br>
             <label for="name">Nome:</label>
-            <input type="text" name="name" id="name" required>
+            <input type="text" name="name" id="name" value="<?= $product ? $product->getName() : '' ?>" required>
             <br>
             <label for="description">Descrição:</label>
-            <textarea name="description" id="description" required></textarea>
+            <textarea name="description" id="description" value="<?= $product ? $product->getDescription() : '' ?>" required></textarea>
             <br>
             <label for="price">Preço:</label>
-            <input type="text" name="price" id="price" required>
+            <input type="text" name="price" id="price" value="<?= $product ? $product->getPrice() : '' ?>" required>
             <br>
             <label for="quantity">Quantidade:</label>
-            <input type="text" name="quantity" id="quantity" required>
+            <input type="text" name="quantity" id="quantity" value="<?= $product ? $product->getQuantity() : '' ?>" required>
             <br>
             <label for="image">Imagem:</label>
             <input type="file" name="image" id="image">
             <br>
-            <button type="submit" name="register">Cadastrar Produto</button>
+            <input type="hidden" name="product_id" id="product_id" value="<?= $product ? $_POST['product_id'] : '' ?>" required>
+            <button type="submit" name="register"><?= $product ? 'Atualizar Produto' : 'Cadastrar Produto' ?></button>
         </form>
     </main>
 

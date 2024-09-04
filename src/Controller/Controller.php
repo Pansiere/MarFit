@@ -4,6 +4,7 @@ namespace Pansiere\MarFit\Controller;
 
 use Pansiere\MarFit\Repositories\ProductRepository;
 use Pansiere\MarFit\Database\Database;
+use Pansiere\MarFit\Models\Product;
 
 class Controller
 {
@@ -24,27 +25,50 @@ class Controller
     public function formEdit($product_id)
     {
         $product = $this->productRepository->find($product_id);
-        var_dump($product);
         require __DIR__ . "/../view/form.php";
     }
 
     public function save()
     {
-        header("Location: /admin");
-        exit();
+        if (isset($_POST['register'])) {
+            $type = $_POST['type'];
+            $name = $_POST['name'];
+            $description = $_POST['description'];
+            $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
+            $quantity = filter_input(INPUT_POST, 'quantity', FILTER_VALIDATE_INT);
+
+            $product = new Product(null, $type, $name, $description, $price, $quantity, null);
+
+            if (isset($_FILES['image']) && $_FILES['image']['name'] != '') {
+                $image = uniqid() . $_FILES['image']['name'];
+                $product->setImage($image);
+                move_uploaded_file($_FILES['image']['tmp_name'], $product->getImageDirectory());
+            }
+
+            $this->productRepository->save($product);
+
+            header("Location: /admin");
+            exit();
+        }
     }
 
     public function delete($product_id)
     {
         $this->productRepository->delete($product_id);
-
         header("Location: /admin");
         exit();
     }
 
     public function update($product_id)
     {
-        # $this->productRepository->update($product_id);
+        $this->productRepository->update(
+            $product_id,
+            $_POST['type'],
+            $_POST['name'],
+            $_POST['description'],
+            (int) $_POST['quantity'],
+            (float) $_POST['price'],
+        );
 
         header("Location: /admin");
         exit();
