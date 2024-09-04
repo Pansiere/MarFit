@@ -27,7 +27,7 @@ switch ($page) {
         break;
 
     case "/formEdit":
-        $controller->formEdit($_POST['produto_id']);
+        $controller->formEdit($_POST['product_id']);
         break;
 
     case "/save":
@@ -35,11 +35,11 @@ switch ($page) {
         break;
 
     case "/delete":
-        $controller->delete($_POST['produto_id']);
+        $controller->delete($_POST['product_id']);
         break;
 
     case "/update":
-        $controller->update($_POST['produto_id']);
+        $controller->update($_POST['product_id']);
         break;
 
     case "/admin":
