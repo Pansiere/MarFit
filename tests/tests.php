@@ -3,12 +3,6 @@ session_start();
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Pansiere\MarFit\Config\Config;
-
-$connenction = Config::createConnection();
-
-var_dump($connenction);
-
 // require_once __DIR__ . '/../vendor/autoload.php';
 
 // use Pansiere\MarFit\DataBase\ConnectorCreator;

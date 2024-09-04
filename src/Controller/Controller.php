@@ -3,13 +3,15 @@
 namespace Pansiere\MarFit\Controller;
 
 use Pansiere\MarFit\Repositories\ProductRepository;
+use Pansiere\MarFit\Database\Database;
 
 class Controller
 {
     private $productRepository;
 
-    public function __construct($pdo)
+    public function __construct()
     {
+        $pdo = Database::getConnection();
         $this->productRepository = new ProductRepository($pdo);
     }
 

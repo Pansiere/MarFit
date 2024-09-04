@@ -5,14 +5,11 @@ session_start();
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Pansiere\MarFit\Controller\Controller;
-use Pansiere\MarFit\Config\Config;
-
-$connenction = Config::createConnection();
 
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $page = rtrim($uri, '/') ?: '/';
 
-$controller = new Controller($pdo);
+$controller = new Controller();
 
 switch ($page) {
     case "/form":
