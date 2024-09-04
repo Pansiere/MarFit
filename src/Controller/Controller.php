@@ -2,8 +2,17 @@
 
 namespace Pansiere\MarFit\Controller;
 
+use Pansiere\MarFit\Repositories\ProductRepository;
+
 class Controller
 {
+    private $productRepository;
+
+    public function __construct($pdo)
+    {
+        $this->productRepository = new ProductRepository($pdo);
+    }
+
     public function form()
     {
         $produto_id = null;
@@ -17,8 +26,7 @@ class Controller
 
     public function delete($product_id)
     {
-        $productRepository = $this;
-        $productRepository->delete($product_id);
+        $this->productRepository->delete($product_id);
 
         header("Location: /admin");
         exit();

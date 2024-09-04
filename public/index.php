@@ -13,7 +13,7 @@ use Pansiere\MarFit\Controller\Controller;
 $connector = new ConnectorCreator(__DIR__ . '/../data/db.sqlite');
 $pdo = $connector->createConnection();
 
-$controller = new Controller();
+$controller = new Controller($pdo);
 
 $productRepository = new ProductRepository($pdo);
 $produtos = $productRepository->findAll();
