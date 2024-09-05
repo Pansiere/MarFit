@@ -10,7 +10,7 @@ use Pansiere\MarFit\Controller\Controller;
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $page = rtrim($uri, '/') ?: '/';
 
-
+// new dd
 $controller = new Controller();
 
 switch ($page) {
