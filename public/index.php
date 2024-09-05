@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
+//require do helper aq
 
 session_start();
 
@@ -8,6 +9,7 @@ use Pansiere\MarFit\Controller\Controller;
 
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $page = rtrim($uri, '/') ?: '/';
+
 
 $controller = new Controller();
 
