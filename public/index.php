@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
-//require do helper aq
+require_once __DIR__ . '/../src/helper.php';
 
 session_start();
 
@@ -10,7 +10,6 @@ use Pansiere\MarFit\Controller\Controller;
 $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $page = rtrim($uri, '/') ?: '/';
 
-// new dd
 $controller = new Controller();
 
 switch ($page) {
