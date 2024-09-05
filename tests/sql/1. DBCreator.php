@@ -2,10 +2,10 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Pansiere\MarFit\DataBase\ConnectorCreator;
 
-$connector = new ConnectorCreator(__DIR__ . '/../../data/db.sqlite');
-$pdo = $connector->createConnection();
+use Pansiere\MarFit\Database\Database;
+
+$pdo = Database::getConnection();
 
 $createTablesSql = '
     CREATE TABLE IF NOT EXISTS products (

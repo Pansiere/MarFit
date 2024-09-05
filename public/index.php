@@ -1,8 +1,8 @@
 <?php
 
-session_start();
-
 require_once __DIR__ . '/../vendor/autoload.php';
+
+session_start();
 
 use Pansiere\MarFit\Controller\Controller;
 
@@ -10,6 +10,7 @@ $uri = strtok($_SERVER['REQUEST_URI'], '?');
 $page = rtrim($uri, '/') ?: '/';
 
 $controller = new Controller();
+var_dump($controller);
 
 switch ($page) {
     case "/form":

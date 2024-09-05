@@ -2,10 +2,9 @@
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-use Pansiere\MarFit\DataBase\ConnectorCreator;
+use Pansiere\MarFit\Database\Database;
 
-$connector = new ConnectorCreator(__DIR__ . '/../../data/db.sqlite');
-$pdo = $connector->createConnection();
+$pdo = Database::getConnection();
 
 $insertDataSql = '
     INSERT INTO unit_of_measure (name) VALUES ("G"), ("GG"), ("M"), ("P");
